@@ -3,6 +3,14 @@
  * During this time the thread should not be able to do anything else.
  */
 
-function sleep (seconds) {
-
+function sleep(milliseconds) {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    while (Date.now() - start < milliseconds) {
+      // blocking the thread
+    }
+    resolve();
+  });
 }
+
+module.exports = sleep;
