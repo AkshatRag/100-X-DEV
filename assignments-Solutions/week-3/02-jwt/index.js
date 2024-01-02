@@ -15,6 +15,15 @@ const jwtPassword = 'secret';
  */
 function signJwt(username, password) {
     // Your code here
+    const emailSchema = z.string().email();
+  const passwordSchema = z.string().min(6);
+  const emailParse = emailSchema.safeParse(username);
+  const passwordParse = passwordSchema.safeParse(password);
+  if (emailParse.success == true && passwordParse.success == true) {
+    return jwt.sign({ username }, jwtPassword);
+  } else {
+    return null;
+  }
 }
 
 /**
@@ -27,6 +36,12 @@ function signJwt(username, password) {
  */
 function verifyJwt(token) {
     // Your code here
+    try {
+        jwt.verify(token, jwtPassword);
+        return true;
+      } catch (error) {
+        return false;
+      }
 }
 
 /**
@@ -38,6 +53,8 @@ function verifyJwt(token) {
  */
 function decodeJwt(token) {
     // Your code here
+    const decoded = jwt.decode(token);
+    return decoded ? true : false;
 }
 
 
